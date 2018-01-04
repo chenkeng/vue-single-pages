@@ -1,6 +1,7 @@
 <template>
 	<div class="han">
 		<h1>Hello {{msg}}!</h1>
+        <button @click="handleRouter">跳转到user</button>
 		<ul>
 			<li>HTML5</li>
 			<li>CSS3</li>
@@ -13,9 +14,14 @@ export default {
   name: 'about',
   data () {
     return {
-      msg: 'Welcome chenchaohan Vue.js App'
+      msg: 'welcome to about page!'
     }
-  }
+  },
+    methods:{
+      handleRouter(){
+          this.$router.push('/about/user');
+      }
+    }
 }
 </script>
 <style scoped>
