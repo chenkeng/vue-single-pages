@@ -3,9 +3,7 @@
 		<h1>Hello {{msg}}!</h1>
         <button @click="handleRouter">跳转到user</button>
 		<ul>
-			<li>HTML5</li>
-			<li>CSS3</li>
-			<li>JAVASCRIPT</li>
+			<li v-for="list in lists">{{list.item}}</li>
 		</ul>
 	</div>
 </template>
@@ -14,7 +12,8 @@ export default {
   name: 'about',
   data () {
     return {
-      msg: 'welcome to about page!'
+        msg: 'welcome to about page!',
+        lists:[{'item':'html5'},{'item':'css3'},{'item':'javascript'}]
     }
   },
     methods:{
