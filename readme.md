@@ -126,8 +126,7 @@ export default {
 ```
 	* 入口，只有一个空的路由视窗，我们的项目的所有内容，都基于这个视窗来展现。
 我们的样式，都将从 src/style/style.scss 这个文件中引用，因此，在 App.vue 这个文件中，直接引用 ./style/style 即可。
-	**scss 中，引用文件，是可以省略 .scss 这个后缀名的。 并且，我们某个不用编译成 css 的文件，我们给文件命名为 _xxx.scss 其中，文件名前缀的下划线，也是可以省略的。 **
-
+	* **scss 中，引用文件，是可以省略 .scss 这个后缀名的。 并且，如果某个不用编译成 css 的文件，我们可以给文件命名为 _xxx.scss 其中，文件名前缀的下划线，也是可以省略的。 **     
 9. 安装sass 预编译
 ```js
 npm install sass-loader -D
@@ -371,3 +370,103 @@ export default {
  .article_list {margin: auto;}
 </style>
 ```
+22. 在 components 文件夹下新建 header.vue 和 footer.vue
+	* 内容随便写点什么，当作页头和页尾就可以
+
+23. src/page/index.vue 文件修改如下
+```vue
+<template>
+ <div>
+   <Header></Header>
+   <div class="article_list">
+     <ul>
+       <li v-for="i in list">
+         <time v-text="i.create_at"></time>
+         <router-link :to="'/content/' + i.id">
+           {{ i.title }}
+         </router-link>
+       </li>
+     </ul>
+   </div>
+   <Footer></Footer>
+ </div>
+</template>
+<script>
+import Header from '../components/header.vue'
+import Footer from '../components/footer.vue'
+export default {
+ components: { Header, Footer },
+ data () {
+   return {
+     list: []
+   }
+ },
+ created () {
+   this.getData()
+ },
+ methods: {
+   getData () {
+     this.$api.get('topics', null, r => {
+       this.list = r.data
+     })
+   }
+ }
+}
+</script>
+```
+此时可以看到将主题列表渲染出来了，但是时间显示太丑，自定义一个时间函数
+
+24. 在src/utils/index.js 文件中添加
+```js
+export default {
+ goodTime (str) {
+   let now = new Date().getTime()
+   let oldTime = new Date(str).getTime()
+   let difference = now - oldTime
+   let result = ''
+   let minute = 1000 * 60
+   let hour = minute * 60
+   let day = hour * 24
+   let month = day * 30
+   let year = month * 12
+   let _year = difference / year
+   let _month = difference / month
+   let _week = difference / (7 * day)
+   let _day = difference / day
+   let _hour = difference / hour
+   let _min = difference / minute
+
+   if (_year >= 1) {
+     result = '发表于 ' + ~~(_year) + ' 年前'
+   } else if (_month >= 1) {
+     result = '发表于 ' + ~~(_month) + ' 个月前'
+   } else if (_week >= 1) {
+     result = '发表于 ' + ~~(_week) + ' 周前'
+   } else if (_day >= 1) {
+     result = '发表于 ' + ~~(_day) + ' 天前'
+   } else if (_hour >= 1) {
+     result = '发表于 ' + ~~(_hour) + ' 个小时前'
+   } else if (_min >= 1) {
+     result = '发表于 ' + ~~(_min) + ' 分钟前'
+   } else {
+     result = '刚刚'
+   }
+   return result
+ }
+}
+
+```
+25. 修改好代码后，我们需要将这个函数挂在到main.js 中去
+```js
+// 引用工具文件
+import utils from './utils/index.js'
+// 将工具方法绑定到全局
+Vue.prototype.$utils = utils
+```
+
+26. index.vue 中调用上面的函数
+```html
+<time v-text="$utils.goodTime(i.create_at)"></time>
+```
+
+
