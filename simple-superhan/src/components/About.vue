@@ -13,7 +13,11 @@ export default {
   data () {
     return {
         msg: 'welcome to about page!',
-        lists:[{'item':'html5'},{'item':'css3'},{'item':'javascript'}]
+        lists:[
+	        {'item':'html5'},
+	        {'item':'css3'},
+	        {'item':'javascript'}
+        ]
     }
   },
     methods:{
