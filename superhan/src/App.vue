@@ -1,12 +1,14 @@
 <template>
   <div id="app">
-    <div>
+    <div class="banner">
         <img class="logo" src="./assets/logo.png">
     </div>
     <div class="nav">
-        <router-link to="/">Index</router-link>
-        <router-link to="/About">About</router-link>
-        <router-link to="/Home">Home</router-link>
+        <router-link to="/">About</router-link>
+        <router-link to="/About">Skills</router-link>
+        <router-link to="/Home">Experice</router-link>
+        <router-link to="/Contact">Contact</router-link>
+        
     </div>
     <router-view></router-view>
     </div>
@@ -24,14 +26,17 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
-
+.banner{
+  background-color: #2c3e50;
+}
+.banner img{
+  margin: 10px;
+}
 .logo{
   width: 80px;
   height: 80px;
-  border:4px solid #00c;
+  border:4px solid #0ca2ba;
   border-radius: 50%;
   animation: move 4s infinite linear;
   animation-play-state:running;
@@ -54,14 +59,16 @@ export default {
 .nav {
     display: flex;
     line-height: 2;
+    background-color: #0ca2ba;
 }
 .nav a{
     flex: 1;
     text-decoration: none;
 }
 .router-link-exact-active{
-    color:red;
+    color:white;
     font-weight: bold;
+    background-color: #2c3c51;
 }
 a{
   color:black;
