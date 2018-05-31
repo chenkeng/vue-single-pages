@@ -1,19 +1,25 @@
 <template>
-  <div id="app">
-    <div class="logo">
-      <img src="./assets/logo.png">
+    <div id="app">
+        <table width="100%">
+            <tr>
+                <td colspan="2" style="background-color:darkgoldenrod">
+                    <router-view name="myHeader"></router-view>
+                </td>
+            </tr>
+            <tr>
+                <td width="20%" style="background-color:thistle">
+                    <router-view name="mySidebar"></router-view>
+                </td>
+                <td width="80%" style="background-color:aquamarine">
+                    <router-view name="myDetail"></router-view>
+                </td>
+            </tr>
+        </table>
     </div>
-
-    <div class="nav">
-        <router-link to="/">Index</router-link>
-        <router-link to="/About">About</router-link>
-        <router-link to="/Home">Home</router-link>
-    </div>
-    <router-view></router-view>
-  </div>
 </template>
 
 <script>
+import './assets/my.css'
 export default {
   name: 'app',
 }
